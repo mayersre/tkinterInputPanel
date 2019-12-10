@@ -27,7 +27,7 @@ class InputPanel(tk.LabelFrame):
      
     <class 'bool'>, <class 'int'>, <class 'float'> and <class 'str'> are available.
     
-    See the values in getTestData below
+    See the values in the simple.py example in this package
     
     datadict={
                 'verbose_names':{},
@@ -208,6 +208,9 @@ class InputPanel(tk.LabelFrame):
             order_number+=1
 
     def InputPanelUpdate(self, tkVar, key, value):
+        '''
+        This method keeps updating the variables in the data structure
+        '''
         print(tkVar, key, tkVar.get(),'#')
         #
         if type(self.datadict['values'][key])==type(True):
@@ -222,6 +225,7 @@ class InputPanel(tk.LabelFrame):
         else:
             # all the rest
             self.datadict['values'][key] = tkVar.get()
+        #
         print(tkVar, key, type(self.datadict['values'][key]),self.datadict['values'][key])
 
 
