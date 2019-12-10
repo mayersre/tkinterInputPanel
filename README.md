@@ -36,4 +36,12 @@ It saves a lot of coding for a GUI in tkinter.
     
     if a dict units is added to the datadict, the units will be displayed behind the entry widgets
     
+Installation :
+   
+   clone this repo
+   go to its root directory 
+   pip install .
+   then run python examples/simple.py to test if it works
 
+
+   

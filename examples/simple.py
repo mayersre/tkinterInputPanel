@@ -5,7 +5,7 @@ Latest version of InputPanel, developed from an initial Version in the Coolprop 
 
 @author: mayers
 
-install tkinterInputPanel with pip before running this example
+install tkinterInputPanel with pip install . in the directory where you find setup.py before running this example
 
 '''
 import tkinter as tk
