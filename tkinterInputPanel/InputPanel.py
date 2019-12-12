@@ -168,11 +168,13 @@ class InputPanel(tk.LabelFrame):
                     cbox=ttk.Combobox(PanelFrame, 
                                       textvariable=self.datadict['callback_vars'][Dkey],
                                       width=self.InputWidth,
-                                      font=font).grid(row=order_number,
-                                                      column=2,
-                                                      padx=8,
-                                                      sticky=tk.W,
-                                                      pady=5)
+                                      font=font)
+                    # cbox must be created finally using grid, pack ... 
+                    cbox.grid(row=order_number,
+                              column=2,
+                              padx=8,
+                              sticky=tk.W,
+                              pady=5)
                     # assign List to combobox
                     cbox['values'] = self.datadict['values'][Dkey]
                     # select first item in list
