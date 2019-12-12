@@ -44,24 +44,28 @@ class _TestApp(tk.Frame):
         testdata = {
             'verbose_names':{
                 # KEY                 LABEL
-                'location'         :  'Last Holiday place',
-                'distance'         :  'There and back with car',
-                'success'          :  'It was asuccess',
-                'budget'           :  'Money spent'
+                'variable_key_1'      :  'Last Holiday place',
+                'variable_key_2'      :  'There and back with car',
+                'variable_key_3'      :  'It was asuccess',
+                'variable_key_4'      :  'Money spent',
+                'variable_key_5'      :  'Choose best place for Holiday'
+        
                 },
             'values':{
                 # KEY                 default value
-                'location'         :  'Southern France', # this will become <class 'str'>
-                'distance'         :  2155,         # this will become <class 'int'>
-                'success'          :  True,        # this will become <class 'bool'>
-                'budget'           :  1267.53          # this will become <class 'float'>
+                'variable_key_1'      :  'Southern France',         # this will become an [ENTRY]    for <class 'str'>
+                'variable_key_2'      :  2155,                      # this will become an [ENTRY]    for <class 'int'>
+                'variable_key_3'      :  True,                      # this will become a  [CHECKBOX] for <class 'bool'>
+                'variable_key_4'      :  1267.53,                   # this will become an [ENTRY]    for <class 'float'>
+                'variable_key_5'      :  ['France','Italy','Home'], # this will become a  [COMBBOX]  for <class 'list'>
                 },
             'units':{
                 # KEY                 Unit of measure
-                'location'         :  '   ',
-                'distance'         :  'km',
-                'success'          :  'yes/no',
-                'budget'           :  '€',
+                'variable_key_1'      :  '   ',
+                'variable_key_2'      :  'km',
+                'variable_key_3'      :  'yes/no',
+                'variable_key_4'      :  '€',
+                'variable_key_5'      :  '   ',
                 },
             'order':[],
             'callback_vars':{},

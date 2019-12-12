@@ -6,6 +6,7 @@ Latest version of InputPanel, developed from an initial Version in the Coolprop 
 @author: mayers
 '''
 import tkinter as tk
+from tkinter import ttk
 
 class InputPanel(tk.LabelFrame):
     '''
@@ -25,7 +26,7 @@ class InputPanel(tk.LabelFrame):
     
     a default value of appropriate type must be present in the dict 'values'
      
-    <class 'bool'>, <class 'int'>, <class 'float'> and <class 'str'> are available.
+    <class 'bool'>, <class 'int'>, <class 'float'>, <class 'str'> and <class 'list'> are available.
     
     See the values in the simple.py example in this package
     
@@ -120,7 +121,7 @@ class InputPanel(tk.LabelFrame):
                 '''
                 For Boolean types we misuse <str>
                 In InputPanelUpdate it is only one line of code
-                For Strings we use <str>
+                For Strings and Lists we use <str>
                 '''
                 self.datadict['callback_vars'][key]=tk.StringVar()
             self.datadict['order'].append(key)
@@ -159,6 +160,24 @@ class InputPanel(tk.LabelFrame):
                                                     padx=8, 
                                                     pady=5, 
                                                     sticky=tk.W)
+                    #
+                elif type(self.datadict['values'][Dkey])==type([1,2,'3']):
+                    '''
+                    We have a selection type content so we create a ttk combobox for a list
+                    '''
+                    cbox=ttk.Combobox(PanelFrame, 
+                                      textvariable=self.datadict['callback_vars'][Dkey],
+                                      width=self.InputWidth,
+                                      font=font).grid(row=order_number,
+                                                      column=2,
+                                                      padx=8,
+                                                      sticky=tk.W,
+                                                      pady=5)
+                    # assign List to combobox
+                    cbox['values'] = self.datadict['values'][Dkey]
+                    # select first item in list
+                    cbox.current(0) 
+                    #
                 else:
                     '''
                     We have a multi input type content so we create an entry 
