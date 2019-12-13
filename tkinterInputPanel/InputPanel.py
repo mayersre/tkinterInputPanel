@@ -44,6 +44,8 @@ class InputPanel(tk.LabelFrame):
         #
         super().__init__(master)
         #
+        self.start_line=1
+        #
         self.InputWidth=InputWidth
         if datadict :
             self.datadict=datadict
@@ -98,7 +100,11 @@ class InputPanel(tk.LabelFrame):
             #
         self.InputFrame.grid(row=1,column=1,padx=8,pady=5,sticky=tk.W)
         #
-        self.InputPanel(self.InputFrame)
+        self.InputPanelHeader(self.InputFrame)
+        #
+        self.InputPanel(self.InputFrame,start_line=self.start_line)
+        #
+        self.InputPanelFooter(self.InputFrame,start_line=self.start_line)
 
     def createCallbackVars(self):
         '''
@@ -126,12 +132,22 @@ class InputPanel(tk.LabelFrame):
                 self.datadict['callback_vars'][key]=tk.StringVar()
             self.datadict['order'].append(key)
             self.datadict['callback_vars'][key].set(self.datadict['values'][key])
+            #
+            # add a dictionary so we can modify the unit labels when they change
+            #
+            self.datadict['unit_labels']={}
         #
-    def InputPanel(self, PanelFrame, font=("Arial", 10, "bold")):
+    def InputPanelHeader(self, PanelFrame, font=("Arial", 10, "bold") ):
+        '''
+        '''
+        self.start_line = 1
+        print('InputPanelHeader')
+    
+    def InputPanel(self, PanelFrame, font=("Arial", 10, "bold"),start_line=1):
         '''
         '''
         #
-        order_number=1
+        order_number=start_line
         for Dkey in self.order :
             if self.datadict['verbose_names'][Dkey] :
                 #
@@ -169,7 +185,10 @@ class InputPanel(tk.LabelFrame):
                                       textvariable=self.datadict['callback_vars'][Dkey],
                                       width=self.InputWidth,
                                       font=font)
-                    # cbox must be created finally using grid, pack ... 
+                    #
+                    # ttk.Combobox returns a Combobox, grid does not
+                    # so we have to split this up here
+                    #
                     cbox.grid(row=order_number,
                               column=2,
                               padx=8,
@@ -195,14 +214,17 @@ class InputPanel(tk.LabelFrame):
                 try:
                     '''
                     If we have a unit assigned, we add the unit of measure
+                    and we add the tk Label to a dict so we can modify it
                     '''
-                    tk.Label(PanelFrame, 
-                              text=self.datadict['units'][Dkey],
-                              font=font).grid(column=3, 
-                                              row=order_number,
-                                              padx=8,
-                                              pady=5,
-                                              sticky=tk.W)
+                    ltext  = self.datadict['units'][Dkey]
+                    llabel = tk.Label(PanelFrame, text=ltext, font=font)
+                    #
+                    # tk.Label returns a Label, grid does not
+                    # so we have to split this up here
+                    #
+                    llabel.grid(column=3, row=order_number, padx=8, pady=5, sticky=tk.W)
+                    self.datadict['unit_labels'][Dkey]=llabel
+                    #
                 except KeyError :
                     '''
                     If we have no unit assigned, we create an empty label
@@ -227,12 +249,21 @@ class InputPanel(tk.LabelFrame):
                                           sticky=tk.W)
             #
             order_number+=1
+        #
+        self.start_line=order_number
+
+    def InputPanelFooter(self, PanelFrame, font=("Arial", 10, "bold"),start_line=1 ):
+        '''
+        '''
+        #pass
+        print('InputPanelFooter',start_line)
+
 
     def InputPanelUpdate(self, tkVar, key, value):
         '''
         This method keeps updating the variables in the data structure
         '''
-        print(tkVar, key, tkVar.get(),'#')
+        #print(tkVar, key, tkVar.get(),'#')
         #
         if type(self.datadict['values'][key])==type(True):
             # For booleans we misuse a string
@@ -247,7 +278,13 @@ class InputPanel(tk.LabelFrame):
             # all the rest
             self.datadict['values'][key] = tkVar.get()
         #
-        print(tkVar, key, type(self.datadict['values'][key]),self.datadict['values'][key])
+        self.UpdateAction(tkVar, key, self.datadict['values'][key])
+        
 
+    def UpdateAction(self, tkVar, key, value):
+        '''
+        This method does extra action when the data changes
+        '''
+        print(tkVar, key,self.datadict['values'][key])
 
 
